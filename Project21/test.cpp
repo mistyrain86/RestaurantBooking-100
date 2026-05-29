@@ -4,6 +4,7 @@
 #include "testable_mail_sender.cpp"
 #include "sunday_booking_scheduler.cpp"
 #include "monday_booking_scheduler.cpp"
+#include "testable_booking_scheduler.cpp"
 
 using namespace testing;
 
