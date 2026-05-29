@@ -9,6 +9,8 @@ protected:
 	void SetUp() override {
 		NOT_ON_THE_HOUR = getTime(2021, 3, 26, 9, 5);
 		ON_THE_HOUR = getTime(2021, 3, 26, 9, 0);
+
+		bookingScheduler.setSmsSender(&testableSmsSender);
 	}
 public:
 	tm getTime(int year, int mon, int day, int hour, int min) {
@@ -26,6 +28,7 @@ public:
 	const int CAPACITY_PER_HOUR = 3;
 
 	BookingScheduler bookingScheduler{ CAPACITY_PER_HOUR };
+	TestableSmsSender testableSmsSender;
 
 	tm plusHour(tm base, int hour) {
 		base.tm_hour += hour;
@@ -89,9 +92,9 @@ TEST_F(BookingItem, t4) {//시간대별_인원제한이_있다_같은_시간대�
 
 TEST_F(BookingItem, t5) {//예약완료시_SMS는_무조건_발송) {
 	//arrange
-	TestableSmsSender testableSmsSender;
+	
 	Schedule* schedule = new Schedule{ ON_THE_HOUR, CAPACITY_PER_HOUR, CUSTOMER };
-	bookingScheduler.setSmsSender(&testableSmsSender);
+	
 	//act
 	bookingScheduler.addSchedule(schedule);
 	//assert
