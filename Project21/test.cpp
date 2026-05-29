@@ -23,6 +23,8 @@ public:
 
 	const int UNDER_CAPACITY = 1;
 	const int CAPACITY_PER_HOUR = 3;
+
+	BookingScheduler bookingScheduler{ CAPACITY_PER_HOUR };
 };
 
 
@@ -30,7 +32,7 @@ TEST_F(BookingItem, t1) {//예약은_정시에만_가능하다_정시가_아닌�
 	//arrange
 	
 	Schedule* schedule = new Schedule{ NOT_ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER };
-	BookingScheduler bookingScheduler{ CAPACITY_PER_HOUR };
+	
 	//act
 	EXPECT_THROW({
 	bookingScheduler.addSchedule(schedule);
@@ -43,7 +45,7 @@ TEST_F(BookingItem, t2) {//예약은_정시에만_가능하다_정시인_경우_
 	//arrange
 	
 	Schedule* schedule = new Schedule{ ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER };
-	BookingScheduler bookingScheduler{ CAPACITY_PER_HOUR };
+	
 	//act
 	bookingScheduler.addSchedule(schedule);
 	//assert
