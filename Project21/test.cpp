@@ -25,6 +25,12 @@ public:
 	const int CAPACITY_PER_HOUR = 3;
 
 	BookingScheduler bookingScheduler{ CAPACITY_PER_HOUR };
+
+	tm plusHour(tm base, int hour) {
+		base.tm_hour += hour;
+		mktime(&base);
+		return base;
+	}
 };
 
 
@@ -73,9 +79,7 @@ TEST_F(BookingItem, t4) {//시간대별_인원제한이_있다_같은_시간대�
 	Schedule* schedule = new Schedule{ ON_THE_HOUR, CAPACITY_PER_HOUR, CUSTOMER };
 	bookingScheduler.addSchedule(schedule);
 	//act
-	tm differentHour = ON_THE_HOUR;
-	differentHour.tm_hour += 1;
-	mktime(&differentHour);
+	tm differentHour =  plusHour(ON_THE_HOUR,1);
 	Schedule* newSchedule = new Schedule{ differentHour, UNDER_CAPACITY, CUSTOMER };
 	bookingScheduler.addSchedule(newSchedule);
 	//assert
